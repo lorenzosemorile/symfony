@@ -23,7 +23,7 @@
         {% if products %}
             <table class="hover">
                 <thead>
-                <th>Id</th>
+                <th>Created</th>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Description</th>
@@ -32,7 +32,7 @@
                 <tbody>
                 {% for product in products %}
                     <tr>
-                        <td>{{ product.id }}</td>
+                        <td>{{ product.created|date('Y-m-d') }}</td>
                         <td>
                             {% if product.image %}
                                 <div class="thumbnail">

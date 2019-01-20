@@ -37,7 +37,7 @@ class ProductController extends AbstractController
         $term = $request->query->get('term');
         if ($term){
             $products = $repo->getProductsFromTagLike($term);
-            dump($products);
+
         }else{
             $products = $repo->findAll();
             if (!$products) {
