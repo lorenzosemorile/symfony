@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products List{% endblock %}
+
+{% block body %}
+    <div class="cell small-10">
+        <h1>Products List</h1>
+
+        <div class="grid-x">
+            <div class="cell small-4">
+                <form method="GET" action="/product/list" name="term">
+                    <div class="input-group">
+                        <span class="input-group-label">Search:</span>
+                        <input class="input-group-field" type="text" name="term">
+                        <div class="input-group-button">
+                            <input type="submit" class="button" value="Go!">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if products %}
+            <table class="hover">
+                <thead>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th></th>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>
+                            {% if product.image %}
+                                <div class="thumbnail">
+                                    <a href="{{ path('product_edit', {'id': product.id}) }}">
+                                        <image width="50" src="/uploads/images/{{ product.image }}" />
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.description }}</td>
+                        <td><a class="button tiny" href="{{ path('product_edit', {'id': product.id}) }}">edit</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No Results for this tag</p>
+        {% endif %}
+    </div>
+{% endblock %}

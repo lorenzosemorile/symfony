@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ h1 }}{% endblock %}
+
+{% block body %}
+    <div class="cell small-4 small-centered">
+        <h1>{{ h1 }}</h1>
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('<a href="#" id="addTag">Add Tag</a>').insertAfter($('#form_relation'));
+        $('#addTag').on('click', function(){
+            var inputTag = '<div class="input-group">' +
+                '<span class="input-group-label">New Tag</span>' +
+                '<input class="input-group-field" type="text" id="newTagValue">' +
+                '<div class="input-group-button">' +
+                '<input type="button" class="button" value="add" id="tagBtn">' +
+                '</div>' +
+                '</div>';
+
+            $(inputTag).insertAfter($('#addTag'));
+
+            $('#tagBtn').on('click', function(){
+                var newTagValue = $('#newTagValue').val();
+                addTag(newTagValue);
+            });
+
+        });
+
+        function addTag(newTag){
+            $.ajax({
+                url : "{{ path('tag_add') }}",
+                data : JSON.stringify({'tag' : {'name' : newTag}}),
+                method: "POST",
+                contentType:'application/json; charset=UTF-8',
+                dataType : 'json'
+            }).then(function(response){
+                console.log(response);
+                if (response.status === 'OK') {
+                    addTagOnSelectOption(response.tag);
+                }
+            })
+        }
+
+        function addTagOnSelectOption(newTag){
+            var option = '<option selected value="' + newTag.value + '">'+ newTag.label +'</option>';
+            $('#form_relation').append(option);
+        }
+
+    </script>
+{% endblock %}
