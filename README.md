@@ -29,4 +29,4 @@ For this reason i've used mysqlite.
 Be sure to have in your application the `app.db` file in var directory.
 <br />
 After few seconds navigate in
-https://localhost/product/create
+https://localhost:8000/product/create
